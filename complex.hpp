@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-#define MY_DEBUG
+// #define MY_DEBUG
 
 using namespace std;
 
@@ -63,10 +63,17 @@ public:
         return *this;
     }
 
+    Complex &operator*=(const Complex &c) {
+        Complex tmp = *this;
+        _real = tmp._real * c._real - tmp._imag * c._imag;
+        _imag = tmp._real * c._imag + tmp._imag * c._real;
+        return *this;
+    }
+
 public:
-    int real() { return _real; }
-    int imag() { return _imag; }
-    string str() { return to_string(_real) + " + " + to_string(_imag) + "i"; }
+    int real() const { return _real; }
+    int imag() const { return _imag; }
+    string str() const { return to_string(_real) + " + " + to_string(_imag) + "i"; }
 
 };
 
@@ -85,5 +92,7 @@ Complex operator-(const Complex &c1, const Complex &c2) {
 }
 
 Complex operator*(const Complex &c1, const Complex &c2) {
-
+    Complex ret = c1;
+    ret *= c2;
+    return ret;
 }
