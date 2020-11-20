@@ -1,8 +1,6 @@
 #include <iostream>
 #include <string>
 
-// #define MY_DEBUG
-
 using namespace std;
 
 class Complex {
@@ -12,31 +10,37 @@ private:
 public:
     Complex(int real, int imag) : _real(real), _imag(imag) {
         #ifdef MY_DEBUG
-        cout << to_string(_real) + " + " + to_string(_imag) + "i" << endl;
+        cout << "constructor : " << _real << " + " << _imag << "i" << endl;
         #endif
     }
 
     // 二項演算子で整数のみでコンストラクタが走るようにするため
     Complex(int real) : _real(real), _imag(0) {
         #ifdef MY_DEBUG
-        cout << to_string(_real) + " + " + to_string(_imag) + "i" << endl;
+        cout << "constructor : " << _real << endl;
         #endif
     }
 
     // コピーコンストラクタ
-    Complex(const Complex &c) {
-        *this = c;
+    Complex(const Complex &c) : _real(c._real), _imag(c._imag) {
+        #ifdef MY_DEBUG
+        cout << "copy constructor : " << _real << " + " << _imag << "i" << endl;
+        #endif
     }
 
-    // デストラクタは、メモリ領域を確保した場合に明示的に書く
-    // デストラクタを記述しなければ、デフォルトデストラクタをコンパイラが生成する
-    // 何もしないデストラクタを記述すると（？）、違反命令発行で落ちる
-    // -> デフォルトデストラクタがかぶって悪さする？
-    // ~Complex() {
+    // コピーコンストラクタ（=演算子使用）
+    // Complex(const Complex &c) {
     //     #ifdef MY_DEBUG
-    //     cout << to_string(_real) + " + " + to_string(_imag) + "i" << endl;
+    //     cout << "copy constructor : " << _real << " + " << _imag << "i" << endl;
     //     #endif
+    //     *this = c;
     // }
+
+    ~Complex() {
+        #ifdef MY_DEBUG
+        cout << "destructor : " << _real << " + " << _imag << "i" << endl;
+        #endif
+    }
 
     Complex &operator=(const Complex &c) {
         _real = c._real;

@@ -1,3 +1,4 @@
+#define MY_DEBUG
 #include "complex.hpp"
 
 using namespace std;
